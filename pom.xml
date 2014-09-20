@@ -1,0 +1,181 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>info.owaism.oauth</groupId>
+	<artifactId>auth.server</artifactId>
+	<version>MASTER-SNAPSHOT</version>
+	<name>The Authentication Server (OAuth2)</name>
+	<description>Authentication Server Module using spring security, jersey implementing the OAuth2 Protocol</description>
+	<packaging>war</packaging>
+
+	<properties>
+		<!-- Maven Plugin Versions -->
+		<maven.plugin.compiler.version>3.1</maven.plugin.compiler.version>
+
+		<!-- Core Properties -->
+		<java.version>1.8</java.version>
+
+		<!-- Dependency Versions -->
+		<org.springframework.version>4.1.0.RELEASE</org.springframework.version>
+		<org.springframework.security.version>3.2.5.RELEASE</org.springframework.security.version>
+		<org.glassfish.jersey.version>2.12</org.glassfish.jersey.version>
+	</properties>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Compile time dependecies -->
+
+			<!-- Spring Dependencies -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${org.springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${org.springframework.security.version}</version>
+			</dependency>
+
+			<!-- for OAuth 2.0 -->
+			<dependency>
+				<groupId>org.springframework.security.oauth</groupId>
+				<artifactId>spring-security-oauth2</artifactId>
+				<version>2.0.3.RELEASE</version>
+			</dependency>
+
+			<!-- Jersey Dependecies -->
+			<dependency>
+				<groupId>org.glassfish.jersey.core</groupId>
+				<artifactId>jersey-server</artifactId>
+				<version>${org.glassfish.jersey.version}</version>
+			</dependency>
+			<!-- Jersey Spring Connector -->
+			<dependency>
+				<groupId>org.glassfish.jersey.ext</groupId>
+				<artifactId>jersey-spring3</artifactId>
+				<version>${org.glassfish.jersey.version}</version>
+			</dependency>
+
+
+			<!-- Provided Time Dependencies -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.1.0</version>
+				<scope>provided</scope>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+
+		<!-- Compile time dependecies -->
+
+		<!-- Spring Dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+		</dependency>
+		<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-web</artifactId> 
+			</dependency> -->
+
+		<!-- Jersey Dependecies -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-server</artifactId>
+		</dependency>
+		<!-- Jersey Spring Connector -->
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-spring3</artifactId>
+		</dependency>
+
+		<!-- Provided Time Dependencies -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<!-- Profile Definitions -->
+	<profiles>
+		<!-- Developer Profile - Activated when the property 'env' has the value 
+			'dev' -->
+		<profile>
+			<id>dev</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>dev</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<!-- Jetty Plugin Will run jetty with the code deployed when 'mvn jetty:run 
+						-Denv=dev' command is issued. -->
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<configuration>
+							<scanIntervalSeconds>10</scanIntervalSeconds>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.plugin.compiler.version}</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<scm>
+		<connection>scm:git:https://github.com/owaism/oauth-server.git</connection>
+		<developerConnection>scm:git:https://github.com/owaism/oauth-server.git</developerConnection>
+	</scm>
+</project>
